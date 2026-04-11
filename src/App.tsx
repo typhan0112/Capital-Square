@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { MapPin, ShieldCheck, Star, TrendingUp, CheckCircle, Shield, Phone, Mail, X, Clock, Plane, FileText, Download, Check, Scale, Building2, Crown, Sunrise, Sun, Sunset, Moon, Maximize, Eye, Layout, Activity, Layers, ChevronDown, Menu, Sparkles, FileSpreadsheet, ChevronLeft, ChevronRight } from 'lucide-react';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import Disclaimer from './Disclaimer';
 import DataProcessingPolicy from './DataProcessingPolicy';
+
+const FadeInSection = ({ children, className, id }: { children: React.ReactNode, className?: string, id?: string }) => (
+  <motion.section
+    id={id}
+    className={className}
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+  >
+    {children}
+  </motion.section>
+);
 
 const faqData = [
   {
@@ -405,7 +419,7 @@ export default function App() {
       </section>
 
       {/* SECTION 2: 4 Core Values (USPs) */}
-      <section className="py-20 px-4 container mx-auto">
+      <FadeInSection className="py-20 px-4 container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Item 1 */}
           <div className="bg-white shadow-xl p-8 rounded-xl hover:-translate-y-2 transition-transform duration-300 border border-gray-100">
@@ -451,13 +465,13 @@ export default function App() {
             </p>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 2.5: Special Offer & CTA Form */}
-      <section className="relative py-20 px-4 bg-[#0A192F] overflow-hidden">
+      <FadeInSection className="relative py-20 px-4 bg-[#0A192F] overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <img loading="lazy" 
             src="https://images.unsplash.com/photo-1555899434-94d1368aa7af?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
             alt="Capital Square View" 
             className="w-full h-full object-cover opacity-20"
@@ -507,13 +521,13 @@ export default function App() {
                 <div className="bg-green-600 p-1.5 rounded text-white">
                   <FileSpreadsheet className="w-5 h-5" />
                 </div>
-                <span className="text-white text-sm font-medium">Bang-gia-sau-uu-dai-tot-nhat-T09.csv</span>
+                <span className="text-white text-sm font-medium">Bang-gia-sau-uu-dai-tot-nhat-T04/2026.csv</span>
               </div>
               <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded border border-white/20">
                 <div className="bg-red-600 p-1.5 rounded text-white">
                   <FileText className="w-5 h-5" />
                 </div>
-                <span className="text-white text-sm font-medium">Chinh-sach-uu-dai-T09.pdf</span>
+                <span className="text-white text-sm font-medium">Chinh-sach-uu-dai-T04/2026.pdf</span>
               </div>
             </div>
 
@@ -569,10 +583,10 @@ export default function App() {
             </form>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 3: Project Overview */}
-      <section id="overview" className="py-24 bg-[#0B1320] px-4">
+      <FadeInSection id="overview" className="py-24 bg-[#0B1320] px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <p className="text-yellow-500 font-semibold tracking-[0.2em] uppercase text-sm mb-4">
@@ -702,15 +716,15 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 4: Location (Split Layout) */}
-      <section id="location" className="py-20 bg-gray-50 px-4">
+      <FadeInSection id="location" className="py-20 bg-gray-50 px-4">
         <div className="container mx-auto flex flex-col md:flex-row items-center gap-12">
           {/* Left: Video / Image */}
           <div className="w-full md:w-1/2 flex flex-col gap-6">
             <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-slate-100 relative group">
-              <img 
+              <img loading="lazy" 
                 src="https://capitalsquarebrg.com.vn/wp-content/uploads/2025/10/capital-square.jpg" 
                 alt="Vị trí Capital Square Đà Nẵng" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -770,20 +784,20 @@ export default function App() {
 
         {/* Full-width Location Image */}
         <div className="w-full mt-16">
-          <img 
+          <img loading="lazy" 
             src="https://capitalsquaredanang.vn/wp-content/uploads/lien-ket-vung-du-an-capital-square-da-nang.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
             alt="Bản đồ vị trí Capital Square Đà Nẵng" 
             className="w-full h-[400px] md:h-[600px] object-cover rounded-2xl shadow-xl"
             referrerPolicy="no-referrer"
           />
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 4.5: Flight Ticket CTA */}
-      <section className="relative py-20 px-4 bg-[#0A192F] overflow-hidden">
+      <FadeInSection className="relative py-20 px-4 bg-[#0A192F] overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <img loading="lazy" 
             src="https://images.unsplash.com/photo-1555899434-94d1368aa7af?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
             alt="Capital Square View" 
             className="w-full h-full object-cover opacity-20"
@@ -806,7 +820,7 @@ export default function App() {
           <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 overflow-hidden flex flex-col md:flex-row shadow-2xl max-w-4xl mx-auto">
             {/* Left: Image */}
             <div className="w-full md:w-5/12 relative">
-              <img 
+              <img loading="lazy" 
                 src="https://w.ladicdn.com/s750x700/661b9fa1474606001290ffc6/anh-man-hinh-2024-11-03-luc-090505-20241103020553-3m4w1.png" 
                 alt="Nhận vé máy bay miễn phí" 
                 className="w-full h-full object-cover min-h-[300px]"
@@ -859,10 +873,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 4.5: Amenities Storytelling */}
-      <section id="amenities" className="py-24 bg-[#0B1320] text-white px-4">
+      <FadeInSection id="amenities" className="py-24 bg-[#0B1320] text-white px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-20">
             <p className="text-[#D4AF37] font-semibold tracking-[0.2em] uppercase text-sm mb-4">
@@ -927,7 +941,7 @@ export default function App() {
           <div className="hidden md:flex bg-slate-800/30 border border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl flex-col md:flex-row">
             {/* Image */}
             <div className="w-full md:w-1/2 relative min-h-[300px] md:min-h-[450px]">
-              <img 
+              <img loading="lazy" 
                 src={amenities[activeStep].image} 
                 alt={amenities[activeStep].title}
                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
@@ -971,7 +985,7 @@ export default function App() {
                     </div>
                   </div>
                   <div className="relative rounded-3xl overflow-hidden aspect-[4/3] border border-slate-700/50">
-                    <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover" />
+                    <img loading="lazy" src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-[#0B1320]/40 to-transparent"></div>
                     <div className="absolute bottom-0 left-0 w-full p-6">
                       <p className="text-white/90 text-base leading-relaxed">{item.desc}</p>
@@ -996,7 +1010,7 @@ export default function App() {
                   className="relative group overflow-hidden rounded-xl md:rounded-2xl aspect-[4/3] cursor-pointer"
                   onClick={() => setSelectedImage(img.url)}
                 >
-                  <img src={img.url} alt={img.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img loading="lazy" src={img.url} alt={img.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <span className="text-white font-medium text-sm md:text-lg tracking-wide text-center px-2">{img.title}</span>
                   </div>
@@ -1014,10 +1028,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 4.75: Interactive Floor Plans */}
-      <section id="floor-plan" className="py-24 bg-gray-50 px-4">
+      <FadeInSection id="floor-plan" className="py-24 bg-gray-50 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <p className="text-[#D4AF37] font-semibold tracking-[0.2em] uppercase text-sm mb-4">
@@ -1208,7 +1222,7 @@ export default function App() {
               className="w-full bg-white rounded-3xl p-4 md:p-8 shadow-xl border border-gray-100 cursor-pointer group relative overflow-hidden"
               onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/mat-bang-toa-c4-capital-square-da-nang.jpg')}
             >
-              <img 
+              <img loading="lazy" 
                 src="https://capitalsquaredanang.vn/wp-content/uploads/mat-bang-toa-c4-capital-square-da-nang.jpg" 
                 alt="Layout mặt bằng tầng điển hình của dự án Capital Square Đà Nẵng"
                 className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.02]"
@@ -1228,7 +1242,7 @@ export default function App() {
               className="w-full bg-white rounded-3xl p-4 md:p-8 shadow-xl border border-gray-100 cursor-pointer group relative overflow-hidden"
               onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/mat-bang-toa-c6-capital-square-da-nang.jpg')}
             >
-              <img 
+              <img loading="lazy" 
                 src="https://capitalsquaredanang.vn/wp-content/uploads/mat-bang-toa-c6-capital-square-da-nang.jpg" 
                 alt="Layout mặt bằng tầng điển hình của dự án Capital Square Đà Nẵng"
                 className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.02]"
@@ -1242,6 +1256,80 @@ export default function App() {
             <p className="mt-6 text-gray-500 text-center italic text-sm md:text-base">
               Layout mặt bằng điển hình toà C6 của dự án Capital Square Đà Nẵng
             </p>
+          </div>
+
+          {/* CTA Receive Floor Plan (Moved here) */}
+          <div className="py-16 md:py-20 bg-[#1e3a5f] relative overflow-hidden px-4 rounded-3xl shadow-2xl mb-24">
+            {/* Background Overlay */}
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1e3a5f]/90 to-[#152a45]/95"></div>
+
+            <div className="max-w-3xl mx-auto relative z-10 flex flex-col items-center text-center">
+              <h2 className="text-2xl md:text-3xl font-medium text-white mb-2">Nhận trọn bộ</h2>
+              <h3 className="text-4xl md:text-5xl font-bold text-white mb-4 uppercase tracking-wide">MẶT BẰNG CÁC TÒA KHÁC</h3>
+              <p className="text-2xl md:text-3xl text-white mb-12">Qua Zalo & Email</p>
+
+              {/* Icons */}
+              <div className="flex items-center justify-center gap-6 md:gap-10 mb-12">
+                {/* PDF Icon */}
+                <div className="bg-white rounded-lg p-3 flex flex-col items-center justify-center w-20 h-24 shadow-lg">
+                  <FileText className="w-10 h-10 text-red-600 mb-1" />
+                  <span className="text-slate-900 font-bold text-sm">PDF</span>
+                </div>
+                {/* Zalo Icon */}
+                <div className="bg-[#0068FF] rounded-2xl p-4 flex items-center justify-center w-24 h-24 shadow-lg relative">
+                  <div className="absolute -bottom-2 left-4 w-6 h-6 bg-[#0068FF] rotate-45"></div>
+                  <span className="text-white font-bold text-2xl relative z-10">Zalo</span>
+                </div>
+                {/* Email Icon */}
+                <div className="bg-white rounded-lg p-4 flex items-center justify-center w-24 h-24 shadow-lg">
+                  <Mail className="w-16 h-16 text-red-500" strokeWidth={1.5} />
+                </div>
+              </div>
+
+              {/* Description Box */}
+              <div className="bg-[#2a4a73]/60 border border-white/10 rounded p-6 flex items-start gap-4 mb-8 text-left backdrop-blur-sm w-full shadow-inner">
+                <div className="bg-white rounded p-2 shrink-0 border border-gray-200">
+                  <FileText className="w-8 h-8 text-red-600" />
+                  <div className="text-center text-[10px] font-bold text-slate-900 mt-1">PDF</div>
+                </div>
+                <p className="text-white text-lg md:text-xl leading-relaxed font-light">
+                  Trên đây là mặt bằng 2 tòa điển hình (C4 & C6). Để nhận chi tiết layout các tòa khác và nhận tư vấn chọn căn đẹp nhất, quý khách vui lòng để lại thông tin. Tài liệu sẽ được gửi ngay qua Zalo & Email!
+                </p>
+              </div>
+
+              {/* Form */}
+              <form className="w-full space-y-4" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công! Tài liệu sẽ được gửi qua Zalo & Email.'); }}>
+                <input 
+                  type="text" 
+                  placeholder="Họ và Tên" 
+                  className="w-full p-4 rounded bg-white text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#0068FF] shadow-inner"
+                  required
+                />
+                <input 
+                  type="tel" 
+                  placeholder="Số điện thoại" 
+                  className="w-full p-4 rounded bg-white text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#0068FF] shadow-inner"
+                  required
+                />
+                <button 
+                  type="submit" 
+                  className="w-full bg-[#D32F2F] hover:bg-[#B71C1C] text-white font-bold py-4 rounded text-xl uppercase transition-colors shadow-lg mt-2"
+                >
+                  BẤM TẢI XUỐNG NGAY
+                </button>
+              </form>
+
+              {/* Footer Text */}
+              <div className="mt-6 space-y-3">
+                <p className="text-white/90 italic text-lg">
+                  (*) Nhập số chính xác để nhận được tài liệu!
+                </p>
+                <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
+                  Bằng việc bấm vào nút "Bấm Gửi Cho Tôi Ngay", Quý vị đồng ý với <strong className="text-white font-medium">Chính Sách Bảo Mật Thông Tin</strong> của chúng tôi.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Floor Plan Tabs Title */}
@@ -1274,7 +1362,7 @@ export default function App() {
             <div className="flex flex-col lg:flex-row">
               {/* Image Area */}
               <div className="w-full lg:w-3/5 relative bg-white min-h-[300px] lg:min-h-[450px] p-4 md:p-8 flex items-center justify-center group cursor-pointer overflow-hidden" onClick={() => setSelectedImage(floorPlans[activeFloorPlan].images[activeFloorPlanImageIndex])}>
-                <img 
+                <img loading="lazy" 
                   src={floorPlans[activeFloorPlan].images[activeFloorPlanImageIndex]} 
                   alt={`Mặt bằng ${floorPlans[activeFloorPlan].name}`}
                   className="w-full h-full object-contain transition-transform duration-700 scale-110 group-hover:scale-125"
@@ -1356,84 +1444,11 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
-      {/* SECTION: CTA Receive Floor Plan */}
-      <section className="py-20 bg-[#1e3a5f] relative overflow-hidden px-4">
-        {/* Background Overlay */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1e3a5f]/90 to-[#152a45]/95"></div>
-
-        <div className="container mx-auto max-w-3xl relative z-10 flex flex-col items-center text-center">
-          <h2 className="text-3xl md:text-4xl font-medium text-white mb-2">Nhận file</h2>
-          <h3 className="text-5xl md:text-6xl font-bold text-white mb-4 uppercase tracking-wide">MẶT BẰNG</h3>
-          <p className="text-3xl md:text-4xl text-white mb-12">Qua Zalo & Email</p>
-
-          {/* Icons */}
-          <div className="flex items-center justify-center gap-6 md:gap-10 mb-12">
-            {/* PDF Icon */}
-            <div className="bg-white rounded-lg p-3 flex flex-col items-center justify-center w-20 h-24 shadow-lg">
-              <FileText className="w-10 h-10 text-red-600 mb-1" />
-              <span className="text-slate-900 font-bold text-sm">PDF</span>
-            </div>
-            {/* Zalo Icon */}
-            <div className="bg-[#0068FF] rounded-2xl p-4 flex items-center justify-center w-24 h-24 shadow-lg relative">
-              <div className="absolute -bottom-2 left-4 w-6 h-6 bg-[#0068FF] rotate-45"></div>
-              <span className="text-white font-bold text-2xl relative z-10">Zalo</span>
-            </div>
-            {/* Email Icon */}
-            <div className="bg-white rounded-lg p-4 flex items-center justify-center w-24 h-24 shadow-lg">
-              <Mail className="w-16 h-16 text-red-500" strokeWidth={1.5} />
-            </div>
-          </div>
-
-          {/* Description Box */}
-          <div className="bg-[#2a4a73]/60 border border-white/10 rounded p-6 flex items-start gap-4 mb-8 text-left backdrop-blur-sm w-full shadow-inner">
-            <div className="bg-white rounded p-2 shrink-0 border border-gray-200">
-              <FileText className="w-8 h-8 text-red-600" />
-              <div className="text-center text-[10px] font-bold text-slate-900 mt-1">PDF</div>
-            </div>
-            <p className="text-white text-lg md:text-xl leading-relaxed font-light">
-              Bộ tài liệu dự án bao gồm: thiết kế mặt bằng, chính sách mới, pháp lý, bảng giá, ... Nhận ngay sau 1 phút!
-            </p>
-          </div>
-
-          {/* Form */}
-          <form className="w-full space-y-4" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công! Tài liệu sẽ được gửi qua Zalo & Email.'); }}>
-            <input 
-              type="text" 
-              placeholder="Họ và Tên" 
-              className="w-full p-4 rounded bg-white text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#0068FF] shadow-inner"
-              required
-            />
-            <input 
-              type="tel" 
-              placeholder="Số điện thoại" 
-              className="w-full p-4 rounded bg-white text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#0068FF] shadow-inner"
-              required
-            />
-            <button 
-              type="submit" 
-              className="w-full bg-[#D32F2F] hover:bg-[#B71C1C] text-white font-bold py-4 rounded text-xl uppercase transition-colors shadow-lg mt-2"
-            >
-              BẤM TẢI XUỐNG NGAY
-            </button>
-          </form>
-
-          {/* Footer Text */}
-          <div className="mt-6 space-y-3">
-            <p className="text-white/90 italic text-lg">
-              (*) Nhập số chính xác để nhận được tài liệu!
-            </p>
-            <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
-              Bằng việc bấm vào nút "Bấm Gửi Cho Tôi Ngay", Quý vị đồng ý với <strong className="text-white font-medium">Chính Sách Bảo Mật Thông Tin</strong> của chúng tôi.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* SECTION: Pricing & Policies */}
-      <section id="sales-policy" className="py-24 bg-[#FDFBF7] px-4 relative overflow-hidden">
+      <FadeInSection id="sales-policy" className="py-24 bg-[#FDFBF7] px-4 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
           <div className="absolute top-[-10%] left-[-5%] w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl"></div>
@@ -1595,25 +1610,25 @@ export default function App() {
                 Chi Tiết Giá Bán Từng Loại Căn Hộ
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <img 
+                <img loading="lazy" 
                   src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-1-ngu-du-an-capital-square-da-nang.jpg" 
                   alt="Giá bán căn hộ 1 phòng ngủ" 
                   className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
                   onClick={() => setSelectedImage('http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-2-1.jpg')} 
                 />
-                <img 
+                <img loading="lazy" 
                   src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu-du-an-capital-square-da-nang.jpg" 
                   alt="Giá bán căn hộ 2 phòng ngủ" 
                   className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
                   onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu-du-an-capital-square-da-nang.jpg')} 
                 />
-                <img 
+                <img loading="lazy" 
                   src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu1-du-an-capital-square-da-nang.jpg" 
                   alt="Giá bán căn hộ 2 phòng ngủ góc" 
                   className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
                   onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu1-du-an-capital-square-da-nang.jpg')} 
                 />
-                <img 
+                <img loading="lazy" 
                   src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-3-ngu-du-an-capital-square-da-nang.jpg" 
                   alt="Giá bán căn hộ 3 phòng ngủ" 
                   className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
@@ -1759,14 +1774,14 @@ export default function App() {
                 </div>
               </div>
               {/* Desktop Image */}
-              <img 
+              <img loading="lazy" 
                 src="https://capitalsquaredanang.net/wp-content/uploads/2025/07/F4-min.jpg" 
                 alt="Chính sách bán hàng Capital Square Đà Nẵng" 
                 className="hidden md:block w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
               {/* Mobile Image */}
-              <img 
+              <img loading="lazy" 
                 src="https://capitalsquaredanang.net/wp-content/uploads/2025/07/F4-min.jpg" 
                 alt="Chính sách bán hàng Capital Square Đà Nẵng" 
                 className="md:hidden block w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-700"
@@ -1775,10 +1790,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 5: Financial FOMO & Offer */}
-      <section className="py-24 px-4 bg-white">
+      <FadeInSection className="py-24 px-4 bg-white">
         <div className="container mx-auto">
           <div className="border-2 border-yellow-500 rounded-3xl bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 max-w-5xl mx-auto relative overflow-hidden">
             {/* Decorative background element */}
@@ -1825,10 +1840,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 6: Construction Progress Gallery */}
-      <section className="py-24 bg-slate-900 text-white px-4">
+      <FadeInSection className="py-24 bg-slate-900 text-white px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold font-serif mb-6">
@@ -1846,7 +1861,7 @@ export default function App() {
                 className="group relative rounded-xl overflow-hidden cursor-pointer aspect-[4/3]"
                 onClick={() => setSelectedImage(img.url)}
               >
-                <img 
+                <img loading="lazy" 
                   src={img.url} 
                   alt={img.title} 
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
@@ -1874,10 +1889,10 @@ export default function App() {
             </button>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION: Da Nang Landmarks & Potential */}
-      <section className="pt-24 bg-white">
+      <FadeInSection className="pt-24 bg-white">
         <div className="container mx-auto max-w-6xl px-4">
           {/* Part 1: 12 Landmarks */}
           <div className="mb-20">
@@ -1900,7 +1915,7 @@ export default function App() {
                 { name: 'Tượng Cá Chép Hóa Rồng', image: 'https://image.vietgoing.com/destination/large/vietgoing_bzf2103034311.webp?auto=format&fit=crop&q=80&w=800' },
               ].map((landmark, idx) => (
                 <div key={idx} className="relative group overflow-hidden aspect-[4/3]">
-                  <img src={landmark.image} alt={landmark.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img loading="lazy" src={landmark.image} alt={landmark.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                   <div className="absolute bottom-3 left-0 w-full text-center">
                     <span className="text-white text-sm md:text-base font-medium drop-shadow-md">{landmark.name}</span>
@@ -1991,10 +2006,10 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 7: Comparison */}
-      <section className="py-24 bg-gray-50 px-4">
+      <FadeInSection className="py-24 bg-gray-50 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <div className="inline-block bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">
@@ -2219,19 +2234,19 @@ export default function App() {
                   Đăng Ký Nhận Tư Vấn
                 </button>
                 <a 
-                  href="tel:0567156768"
+                  href="tel:0905683225"
                   className="bg-[#0B1426] hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2"
                 >
-                  Gọi Hotline: 0567.1567.68
+                  Gọi Hotline: 0905.683.225
                 </a>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 8: Review & FAQ */}
-      <section className="py-24 bg-white px-4">
+      <FadeInSection className="py-24 bg-white px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">
@@ -2322,7 +2337,7 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* SECTION 9: Footer & Lead Capture Form */}
       <footer className="bg-slate-900 text-gray-300 pt-16 pb-8 border-t-4 border-[#D4AF37]">
@@ -2340,15 +2355,15 @@ export default function App() {
                 <p>Công ty Cổ phần Bất động sản Capital Square</p>
                 <p className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#D4AF37]" />
-                  <span>Tầng 3, Tòa nhà Indochina Riverside, 74 Bạch Đằng, Hải Châu, Đà Nẵng</span>
+                  <span>386 Điện Biên Phủ, Phường Thanh Khê, Thành Phố Đà Nẵng</span>
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 shrink-0 text-[#D4AF37]" />
-                  <a href="tel:0567156768" className="hover:text-[#D4AF37] transition-colors font-bold">0567.1567.68</a>
+                  <a href="tel:0905683225" className="hover:text-[#D4AF37] transition-colors font-bold">0905.683.225</a>
                 </p>
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4 shrink-0 text-[#D4AF37]" />
-                  <a href="mailto:info@capitalsquare.vn" className="hover:text-[#D4AF37] transition-colors">info@capitalsquare.vn</a>
+                  <a href="mailto:info@datxanhmientrung.com" className="hover:text-[#D4AF37] transition-colors">info@datxanhmientrung.com</a>
                 </p>
               </div>
             </div>
@@ -2438,7 +2453,7 @@ export default function App() {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-            <p>&copy; {new Date().getFullYear()} Capital Square Đà Nẵng. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Capital Square Đà Nẵng. Thiết kế và Marketing <a href="https://www.facebook.com/typhan0112">Tý Phan</a></p>
             <p className="mt-2 md:mt-0">Được phát triển và vận hành bởi Đại lý phân phối chính thức.</p>
           </div>
         </div>
@@ -2447,7 +2462,7 @@ export default function App() {
       {/* GLOBAL BEHAVIORS: Sticky Bottom Mobile Menu */}
       <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-50 md:hidden flex justify-between p-2.5 border-t border-gray-100 pb-safe">
         <a 
-          href="tel:0793551551"
+          href="tel:0905683225"
           className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl w-1/2 mr-1.5 py-2.5 flex justify-center items-center gap-2 font-bold text-sm shadow-[0_4px_10px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
         >
           <div className="bg-white/20 p-1.5 rounded-full animate-pulse">
@@ -2587,7 +2602,7 @@ export default function App() {
           >
             <X className="w-10 h-10" />
           </button>
-          <img 
+          <img loading="lazy" 
             src={selectedImage} 
             alt="Tiện ích Capital Square" 
             className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
@@ -2610,8 +2625,8 @@ export default function App() {
             <div className="flex flex-col md:flex-row">
               {/* Left side - Image/Graphic */}
               <div className="w-full md:w-2/5 bg-slate-900 relative hidden md:block">
-                <img 
-                  src="https://w.ladicdn.com/s768x610/661b9fa1474606001290ffc6/z6718028050124_b3e21a55503b595c29e056c6769dedb7-20250618092553-e2tdt.jpg" 
+                <img loading="lazy" 
+                  src="https://api.cvr.com.vn/uploads/2025/8/975f4f13-66b2-41b1-be79-c9e71b20b3c6.jpeg?w=3840&q=75" 
                   alt="Capital Square Đà Nẵng" 
                   className="absolute inset-0 w-full h-full object-cover opacity-60"
                   referrerPolicy="no-referrer"
@@ -2677,14 +2692,14 @@ export default function App() {
 
       {/* Floating Zalo Button */}
       <a 
-        href="https://zalo.me/0793551551" 
+        href="https://zalo.me/0905683225" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-[0_0_20px_rgba(0,132,255,0.4)] flex items-center justify-center hover:scale-110 transition-transform duration-300 animate-bounce group"
         aria-label="Chat Zalo"
       >
         <div className="absolute inset-0 rounded-full bg-blue-500 opacity-20 animate-ping group-hover:animate-none"></div>
-        <img 
+        <img loading="lazy" 
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/1280px-Icon_of_Zalo.svg.png" 
           alt="Zalo" 
           className="w-10 h-10 md:w-12 md:h-12 object-contain relative z-10"
