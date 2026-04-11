@@ -151,8 +151,8 @@ const floorPlans = [
     view: 'Sông Hàn, Cầu Rồng',
     layout: '1 Phòng ngủ, 1 WC, Phòng khách, Bếp, Ban công',
     images: [
-      'https://drive.google.com/file/d/1p7L_csn6KjDyhen1xoHX7-pSFkWMSzQC/view?usp=sharing',
-      'https://thelegend-tlgdn.com/wp-content/uploads/2025/12/1pn-the-legend-city-1.png'
+      'http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-1.webp',
+      'http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-2-1.jpg'
     ],
   },
   {
@@ -162,8 +162,8 @@ const floorPlans = [
     view: 'Biển Mỹ Khê, Bán đảo Sơn Trà',
     layout: '2 Phòng ngủ, 2 WC, Phòng khách, Bếp, Ban công rộng',
     images: [
-      'https://thelegend-tlgdn.com/wp-content/uploads/2025/12/2pn-the-legend-city-1.png',
-      'https://thelegend-tlgdn.com/wp-content/uploads/2025/12/2pn-the-legend-city-1.png'
+      'http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-3.webp',
+      'http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-4.webp'
     ],
   },
   {
@@ -173,8 +173,8 @@ const floorPlans = [
     view: 'Sông Hàn, Biển Mỹ Khê, Trung tâm TP',
     layout: '3 Phòng ngủ, 2 WC, Phòng khách lớn, Bếp, 2 Ban công',
     images: [
-      'https://thelegend-tlgdn.com/wp-content/uploads/2025/12/3pn-the-legend-city.png',
-      'https://thelegend-tlgdn.com/wp-content/uploads/2025/12/3pn-the-legend-city.png'
+      'http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-5.webp',
+      'http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-4-1-1.jpg'
     ],
   },
   {
@@ -184,8 +184,8 @@ const floorPlans = [
     view: 'Panorama 360 độ Sông - Núi - Biển',
     layout: '4 Phòng ngủ, 5 WC, Hồ bơi riêng, Sân vườn, Phòng giải trí',
     images: [
-      'https://file4.batdongsan.com.vn/resize/745x510/2026/03/24/20260324114844-9896_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/745x510/2026/03/24/20260324114844-9896_wm.jpg'
+      'https://estuaryresidental.com/du-an/wp-content/uploads/2025/04/Nha-mau-can-ho-Capital-Square-Da-Nang-tai-Capital-Square-2-3.jpg',
+      'https://capitalsquaredanang.vn/wp-content/uploads/capital-square-da-nang-tien-ich.jpg'
     ],
   }
 ];
@@ -289,7 +289,7 @@ export default function App() {
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Capital Square Logo" className="h-10 md:h-12 object-contain" />
+            <img src="http://capital-square.com.vn/wp-content/uploads/2026/04/logo-15.png" alt="Capital Square Logo" className="h-10 md:h-12 object-contain" />
           </a>
 
           {/* Desktop Menu */}
@@ -1599,7 +1599,7 @@ export default function App() {
                   src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-1-ngu-du-an-capital-square-da-nang.jpg" 
                   alt="Giá bán căn hộ 1 phòng ngủ" 
                   className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
-                  onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-1-ngu-du-an-capital-square-da-nang.jpg')} 
+                  onClick={() => setSelectedImage('http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-2-1.jpg')} 
                 />
                 <img 
                   src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu-du-an-capital-square-da-nang.jpg" 
@@ -1767,7 +1767,7 @@ export default function App() {
               />
               {/* Mobile Image */}
               <img 
-                src="https://capitalsquaredanang.net/wp-content/uploads/2025/07/F4-min.jpgg" 
+                src="https://capitalsquaredanang.net/wp-content/uploads/2025/07/F4-min.jpg" 
                 alt="Chính sách bán hàng Capital Square Đà Nẵng" 
                 className="md:hidden block w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-700"
                 referrerPolicy="no-referrer"
@@ -1886,18 +1886,18 @@ export default function App() {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
               {[
-                { name: 'Bà Nà Hill', image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Asia Park', image: 'https://images.unsplash.com/photo-1565626423194-56168f121d55?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Novotel Da Nang', image: 'https://images.unsplash.com/photo-1582650625101-01ebf010212f?auto=format&fit=crop&q=80&w=800' },
-                { name: 'InterContinental Sun', image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Bà Nà Hill', image: 'https://bizweb.dktcdn.net/100/514/927/products/z6092595379502-59475570f04c6354d6501859c471cf21.jpg?v=1766729940600?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Asia Park', image: 'https://duan-sungroup.com/wp-content/uploads/2022/11/Asia-park-cong-vien-chau-a-da-nang-to-hop-vui-choi-giai-tri.jpg?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Novotel Da Nang', image: 'https://sungroupcity.com.vn/wp-content/uploads/2022/02/novotel-nam-ngay-ben-bo-tay-song-han-tho-mong.jpg?auto=format&fit=crop&q=80&w=800' },
+                { name: 'InterContinental Sun', image: 'https://duan-sungroup.com/wp-content/uploads/2022/12/intercontinental-da-nang-sun-peninsula-resort-la-du-an-nghi-duong-dang-cap-quoc-te.png?auto=format&fit=crop&q=80&w=800' },
                 { name: 'Cầu Vàng', image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Biển Mỹ Khê', image: 'https://images.unsplash.com/photo-1563492065599-3520f775eeed?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Cầu Rồng', image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Cầu Sông Hàn', image: 'https://images.unsplash.com/photo-1582650625101-01ebf010212f?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Cầu Trần Thị Lý', image: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Cầu Thuận Phước', image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Cầu Tình Yêu', image: 'https://images.unsplash.com/photo-1565626423194-56168f121d55?auto=format&fit=crop&q=80&w=800' },
-                { name: 'Tượng Cá Chép Hóa Rồng', image: 'https://images.unsplash.com/photo-1582650625101-01ebf010212f?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Biển Mỹ Khê', image: 'https://bizweb.dktcdn.net/100/539/761/files/my-khe-2.jpg?v=1758861811717?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Cầu Rồng', image: 'https://benduthuyendanang.com/wp-content/uploads/Lich-Cau-rong-phun-lua.jpg?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Cầu Sông Hàn', image: 'https://api.sovaba.travel/uploads/cau_quay_song_han_2d999d485c.jpg?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Cầu Trần Thị Lý', image: 'https://statics.vinpearl.com/cau-tran-thi-ly-da-nang-9_1634091275.JPG?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Cầu Thuận Phước', image: 'https://mia.vn/media/uploads/blog-du-lich/don-tim-truoc-ve-dep-lang-man-cua-cau-thuan-phuoc-da-nang-01-1640687388.jpeg?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Cầu Tình Yêu', image: 'https://vietluxtour.com/Upload/images/2024/khamphatrongnuoc/C%E1%BA%A7u%20t%C3%ACnh%20y%C3%AAu%20%C4%90%C3%A0%20N%E1%BA%B5ng/cau-tinh-yeu-da-nang%20(8)-min.jpg?auto=format&fit=crop&q=80&w=800' },
+                { name: 'Tượng Cá Chép Hóa Rồng', image: 'https://image.vietgoing.com/destination/large/vietgoing_bzf2103034311.webp?auto=format&fit=crop&q=80&w=800' },
               ].map((landmark, idx) => (
                 <div key={idx} className="relative group overflow-hidden aspect-[4/3]">
                   <img src={landmark.image} alt={landmark.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -2330,9 +2330,11 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 border-b border-slate-800 pb-12">
             {/* Column 1: Company Info */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold font-serif text-white">
-                Capital Square
-              </h3>
+              <img 
+                src="http://capital-square.com.vn/wp-content/uploads/2026/04/logo__15_-removebg-preview.png" 
+                alt="Capital Square Logo" 
+                className="h-12 md:h-16 object-contain"
+              />
               <div className="text-sm space-y-3">
                 <p className="font-bold text-[#D4AF37]">Đại lý phân phối chính thức</p>
                 <p>Công ty Cổ phần Bất động sản Capital Square</p>
