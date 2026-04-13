@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { MapPin, ShieldCheck, Star, TrendingUp, CheckCircle, Shield, Phone, Mail, X, Clock, Plane, FileText, Download, Check, Scale, Building2, Crown, Sunrise, Sun, Sunset, Moon, Maximize, Eye, Layout, Activity, Layers, ChevronDown, Menu, Sparkles, FileSpreadsheet, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, ShieldCheck, Star, TrendingUp, CheckCircle, Shield, Phone, Mail, X, Clock, Plane, FileText, Download, Check, Scale, Building2, Crown, Sunrise, Sun, Sunset, Moon, Maximize, Eye, Layout, Activity, Layers, ChevronDown, Menu, Sparkles, FileSpreadsheet, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import Disclaimer from './Disclaimer';
@@ -59,7 +59,7 @@ const comparisonData = [
       density: '40% mật độ xây dựng',
       amenities: '88+ tiện ích, Hồ bơi 1.500m2',
       operator: 'Savills Việt Nam',
-      price: 'Từ 6.1 tỷ/căn',
+      price: 'Từ 4.x tỷ/căn',
       progress: 'Bàn giao Q1/2027',
       highlight: 'Bán & cho thuê người nước ngoài'
     }
@@ -240,6 +240,52 @@ export default function App() {
   const [showExitIntent, setShowExitIntent] = useState(false);
   const [hasShownExitIntent, setHasShownExitIntent] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState<{show: boolean, message: string, type: 'success' | 'error'}>({show: false, message: '', type: 'success'});
+
+  const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
+    setNotification({ show: true, message, type });
+    setTimeout(() => {
+      setNotification(prev => ({ ...prev, show: false }));
+    }, 5000); // Hide after 5 seconds
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>, formName: string) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    // Thay bằng Access Key của bạn từ web3forms.com
+    formData.append("access_key", "0799f5f6-1bb8-4efb-b5fd-f0ed88f5d26b");
+    formData.append("subject", "Khách hàng mới từ form: " + formName);
+    formData.append("from_name", "Capital Square Landing Page");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        showNotification('Đăng ký thành công! Chúng tôi sẽ liên hệ sớm nhất.', 'success');
+        (e.target as HTMLFormElement).reset();
+        setIsModalOpen(false);
+        setIsLegalModalOpen(false);
+        setShowExitIntent(false);
+      } else {
+        showNotification('Có lỗi xảy ra, vui lòng thử lại sau.', 'error');
+      }
+    } catch (error) {
+      console.error(error);
+      showNotification('Có lỗi xảy ra, vui lòng kiểm tra kết nối mạng.', 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
   // Exit intent logic
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -298,12 +344,30 @@ export default function App() {
 
   return (
     <div className="font-sans text-gray-800 bg-white relative pb-16 md:pb-0 pt-20">
+      {/* Notification Toast */}
+      {notification.show && (
+        <div 
+          id={notification.type === 'success' ? 'guiThanhCong' : undefined}
+          className={`fixed top-24 right-4 z-[9999] p-4 rounded-lg shadow-2xl text-white font-medium transition-all duration-500 transform translate-y-0 opacity-100 flex items-center gap-3 ${notification.type === 'success' ? 'bg-green-600' : 'bg-red-600'}`}
+        >
+          {notification.type === 'success' ? (
+            <CheckCircle className="w-6 h-6" />
+          ) : (
+            <AlertCircle className="w-6 h-6" />
+          )}
+          <span>{notification.message}</span>
+          <button onClick={() => setNotification(prev => ({ ...prev, show: false }))} className="ml-4 hover:opacity-80">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
+
       {/* HEADER */}
       <header className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-sm z-[100] transition-all duration-300">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           {/* Logo */}
           <a href="#hero" className="flex items-center gap-2">
-            <img src="http://capital-square.com.vn/wp-content/uploads/2026/04/logo-15.png" alt="Capital Square Logo" className="h-10 md:h-12 object-contain" />
+            <img src="http://capital-square.com.vn/wp-content/uploads/2026/04/logo__15_-removebg-preview.png" alt="Capital Square Logo" className="h-10 md:h-12 object-contain" />
           </a>
 
           {/* Desktop Menu */}
@@ -532,11 +596,11 @@ export default function App() {
             </div>
 
             {/* Form */}
-            <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ gửi tài liệu ngay.'); }}>
+            <form className="space-y-5" onSubmit={(e) => handleFormSubmit(e, "Form Đăng Ký")}>
               <div>
                 <label className="block text-gray-300 text-sm mb-1">Tên Quý Khách:</label>
                 <input 
-                  type="text" 
+                  type="text" name="name" 
                   placeholder="Nhập Họ và tên quý khách" 
                   className="w-full p-3 rounded bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
                   required
@@ -545,7 +609,7 @@ export default function App() {
               <div>
                 <label className="block text-gray-300 text-sm mb-1">SĐT/Zalo/Viber Quý Khách:</label>
                 <input 
-                  type="tel" 
+                  type="tel" name="phone" 
                   placeholder="Nhập Số điện thoại quý khách" 
                   className="w-full p-3 rounded bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
                   required
@@ -841,10 +905,10 @@ export default function App() {
                 Quý khách vui lòng điền thông tin dưới đây. Hệ thống sẽ gửi vào Zalo trong ít phút. Quý khách sẽ không bị làm phiền. Cam kết bảo mật thông tin khách hàng
               </p>
 
-              <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ liên hệ sớm nhất.'); }}>
+              <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "Form Đăng Ký")}>
                 <div>
                   <input 
-                    type="text" 
+                    type="text" name="name" 
                     placeholder="Họ và tên" 
                     className="w-full p-3.5 rounded bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
                     required
@@ -852,7 +916,7 @@ export default function App() {
                 </div>
                 <div>
                   <input 
-                    type="tel" 
+                    type="tel" name="phone" 
                     placeholder="Số điện thoại" 
                     className="w-full p-3.5 rounded bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
                     required
@@ -1176,15 +1240,15 @@ export default function App() {
               </p>
 
               {/* Form */}
-              <form className="w-full max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mb-12" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công! Chúng tôi sẽ gửi tài liệu ngay.'); }}>
+              <form className="w-full max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mb-12" onSubmit={(e) => handleFormSubmit(e, "Form Đăng Ký")}>
                 <input 
-                  type="text" 
+                  type="text" name="name" 
                   placeholder="Họ và tên" 
                   className="flex-1 p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:bg-white/10 transition-all"
                   required
                 />
                 <input 
-                  type="tel" 
+                  type="tel" name="phone" 
                   placeholder="Số điện thoại" 
                   className="flex-1 p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:bg-white/10 transition-all"
                   required
@@ -1218,6 +1282,12 @@ export default function App() {
 
           {/* Overall Floor Plan Image */}
           <div className="mb-24 flex flex-col items-center">
+            <div className="text-center mb-10">
+              <h3 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 mb-4 uppercase">
+                MẶT BẰNG TOÀ ĐIỂN HÌNH CAPITAL SQUARE ĐÀ NẴNG
+              </h3>
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto"></div>
+            </div>
             <div 
               className="w-full bg-white rounded-3xl p-4 md:p-8 shadow-xl border border-gray-100 cursor-pointer group relative overflow-hidden"
               onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/mat-bang-toa-c4-capital-square-da-nang.jpg')}
@@ -1299,15 +1369,15 @@ export default function App() {
               </div>
 
               {/* Form */}
-              <form className="w-full space-y-4" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công! Tài liệu sẽ được gửi qua Zalo & Email.'); }}>
+              <form className="w-full space-y-4" onSubmit={(e) => handleFormSubmit(e, "Form Đăng Ký")}>
                 <input 
-                  type="text" 
+                  type="text" name="name" 
                   placeholder="Họ và Tên" 
                   className="w-full p-4 rounded bg-white text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#0068FF] shadow-inner"
                   required
                 />
                 <input 
-                  type="tel" 
+                  type="tel" name="phone" 
                   placeholder="Số điện thoại" 
                   className="w-full p-4 rounded bg-white text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#0068FF] shadow-inner"
                   required
@@ -1468,172 +1538,66 @@ export default function App() {
           </div>
 
           <div className="space-y-20">
-            {/* Pricing Table */}
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold font-serif text-slate-900 mb-8 flex items-center justify-center md:justify-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#D4AF37]/20 flex items-center justify-center shrink-0">
-                  <span className="w-4 h-4 rounded-full bg-[#D4AF37]"></span>
-                </div>
-                Bảng Giá Dự Kiến
-              </h3>
+            {/* Quote Request Form & Pricing Image */}
+            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 md:p-12 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#0B1320]/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
               
-              {/* Desktop Table */}
-              <div className="hidden md:block bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-[#0B1320] text-white">
-                      <th className="py-5 px-6 font-medium text-base uppercase tracking-wider">Loại Căn Hộ</th>
-                      <th className="py-5 px-6 font-medium text-base uppercase tracking-wider">Diện Tích</th>
-                      <th className="py-5 px-6 font-medium text-base uppercase tracking-wider">Giá Bán Dự Kiến</th>
-                      <th className="py-5 px-6 font-medium text-base uppercase tracking-wider text-center">Tình Trạng</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    <tr className="hover:bg-gray-50 transition-colors">
-                      <td className="py-5 px-6 font-semibold text-slate-900 text-lg">Căn 1PN</td>
-                      <td className="py-5 px-6 text-gray-600 text-lg">50m² - 60m²</td>
-                      <td className="py-5 px-6 font-bold text-[#D4AF37] text-xl">Từ 6.1 Tỷ</td>
-                      <td className="py-5 px-6 text-center">
-                        <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">Đang mở bán</span>
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50 transition-colors">
-                      <td className="py-5 px-6 font-semibold text-slate-900 text-lg">Căn 2PN</td>
-                      <td className="py-5 px-6 text-gray-600 text-lg">73m² - 84m²</td>
-                      <td className="py-5 px-6 font-bold text-[#D4AF37] text-xl">Từ 8.5 Tỷ</td>
-                      <td className="py-5 px-6 text-center">
-                        <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">Đang mở bán</span>
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50 transition-colors">
-                      <td className="py-5 px-6 font-semibold text-slate-900 text-lg">Căn 3PN</td>
-                      <td className="py-5 px-6 text-gray-600 text-lg">100m² - 115m²</td>
-                      <td className="py-5 px-6 font-bold text-[#D4AF37] text-xl">Từ 12 Tỷ</td>
-                      <td className="py-5 px-6 text-center">
-                        <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">Đang mở bán</span>
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50 transition-colors">
-                      <td className="py-5 px-6 font-semibold text-slate-900 text-lg">Penthouse</td>
-                      <td className="py-5 px-6 text-gray-600 text-lg">256m² - 415m²</td>
-                      <td className="py-5 px-6 font-bold text-[#D4AF37] text-xl">Liên hệ</td>
-                      <td className="py-5 px-6 text-center">
-                        <span className="inline-block px-4 py-1.5 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">Booking</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Mobile Cards */}
-              <div className="md:hidden space-y-4">
-                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]"></div>
-                  <div className="flex justify-between items-center mb-4">
-                    <h4 className="font-bold text-xl text-slate-900">Căn 1PN</h4>
-                    <span className="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Đang mở bán</span>
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                {/* Left: Image */}
+                <div className="relative group cursor-pointer" onClick={() => setSelectedImage('http://capital-square.com.vn/wp-content/uploads/2026/04/bang-gia-capital-square.png')}>
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl flex items-center justify-center z-10">
+                    <Maximize className="w-10 h-10 text-white" />
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-500 text-sm">Diện tích:</span>
-                      <span className="font-medium text-slate-900">50m² - 60m²</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-gray-50">
-                      <span className="text-gray-500 text-sm">Giá dự kiến:</span>
-                      <span className="font-bold text-[#D4AF37] text-lg">Từ 3.5 Tỷ</span>
-                    </div>
-                  </div>
+                  <img 
+                    src="http://capital-square.com.vn/wp-content/uploads/2026/04/bang-gia-capital-square.png" 
+                    alt="Bảng giá Capital Square" 
+                    className="w-full rounded-2xl shadow-lg border border-gray-100 object-cover"
+                  />
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]"></div>
-                  <div className="flex justify-between items-center mb-4">
-                    <h4 className="font-bold text-xl text-slate-900">Căn 2PN</h4>
-                    <span className="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Đang mở bán</span>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-500 text-sm">Diện tích:</span>
-                      <span className="font-medium text-slate-900">73m² - 84m²</span>
+                {/* Right: Form */}
+                <div className="text-left">
+                  <h3 className="text-3xl md:text-4xl font-bold font-serif text-slate-900 mb-4">
+                    Nhận Bảng Báo Giá Chi Tiết
+                  </h3>
+                  <p className="text-gray-600 text-lg mb-8">
+                    Đăng ký để nhận ngay bảng báo giá chi tiết quỹ căn đẹp, ngoại giao chính thức từ chủ đầu tư với mức giá tốt nhất.
+                  </p>
+                  
+                  <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, "Form Nhận Báo Giá Chi Tiết")}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <input 
+                        type="text" 
+                        name="name" 
+                        placeholder="Họ và tên *" 
+                        className="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
+                        required
+                      />
+                      <input 
+                        type="tel" 
+                        name="phone" 
+                        placeholder="Số điện thoại *" 
+                        className="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
+                        required
+                      />
                     </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-gray-50">
-                      <span className="text-gray-500 text-sm">Giá dự kiến:</span>
-                      <span className="font-bold text-[#D4AF37] text-lg">Từ 5.2 Tỷ</span>
-                    </div>
-                  </div>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      placeholder="Email (Không bắt buộc)" 
+                      className="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all"
+                    />
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full bg-[#D4AF37] hover:bg-[#AA8C2C] text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-[#D4AF37]/30 flex items-center justify-center gap-2 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'ĐANG GỬI...' : 'NHẬN BÁO GIÁ NGAY'}
+                      {!isSubmitting && <TrendingUp className="w-5 h-5" />}
+                    </button>
+                  </form>
                 </div>
-
-                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]"></div>
-                  <div className="flex justify-between items-center mb-4">
-                    <h4 className="font-bold text-xl text-slate-900">Căn 3PN</h4>
-                    <span className="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Đang mở bán</span>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-500 text-sm">Diện tích:</span>
-                      <span className="font-medium text-slate-900">100m² - 115m²</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-gray-50">
-                      <span className="text-gray-500 text-sm">Giá dự kiến:</span>
-                      <span className="font-bold text-[#D4AF37] text-lg">Từ 7.5 Tỷ</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500"></div>
-                  <div className="flex justify-between items-center mb-4">
-                    <h4 className="font-bold text-xl text-slate-900">Penthouse</h4>
-                    <span className="inline-block px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Booking</span>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-500 text-sm">Diện tích:</span>
-                      <span className="font-medium text-slate-900">256m² - 415m²</span>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-gray-50">
-                      <span className="text-gray-500 text-sm">Giá dự kiến:</span>
-                      <span className="font-bold text-[#D4AF37] text-lg">Liên hệ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Pricing Gallery */}
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold font-serif text-slate-900 mb-8 flex items-center justify-center md:justify-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#D4AF37]/20 flex items-center justify-center shrink-0">
-                  <span className="w-4 h-4 rounded-full bg-[#D4AF37]"></span>
-                </div>
-                Chi Tiết Giá Bán Từng Loại Căn Hộ
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <img loading="lazy" 
-                  src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-1-ngu-du-an-capital-square-da-nang.jpg" 
-                  alt="Giá bán căn hộ 1 phòng ngủ" 
-                  className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
-                  onClick={() => setSelectedImage('http://capital-square.com.vn/wp-content/uploads/2026/04/Concept-noi-that-Du-an-Capital-Square-hinh-anh-2-1.jpg')} 
-                />
-                <img loading="lazy" 
-                  src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu-du-an-capital-square-da-nang.jpg" 
-                  alt="Giá bán căn hộ 2 phòng ngủ" 
-                  className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
-                  onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu-du-an-capital-square-da-nang.jpg')} 
-                />
-                <img loading="lazy" 
-                  src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu1-du-an-capital-square-da-nang.jpg" 
-                  alt="Giá bán căn hộ 2 phòng ngủ góc" 
-                  className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
-                  onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-2-ngu1-du-an-capital-square-da-nang.jpg')} 
-                />
-                <img loading="lazy" 
-                  src="https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-3-ngu-du-an-capital-square-da-nang.jpg" 
-                  alt="Giá bán căn hộ 3 phòng ngủ" 
-                  className="w-full rounded-2xl shadow-lg border border-gray-100 hover:scale-[1.02] transition-transform duration-300 cursor-pointer object-cover" 
-                  onClick={() => setSelectedImage('https://capitalsquaredanang.vn/wp-content/uploads/gia-ban-can-ho-3-ngu-du-an-capital-square-da-nang.jpg')} 
-                />
               </div>
             </div>
 
@@ -1660,7 +1624,7 @@ export default function App() {
                   <tbody className="divide-y divide-gray-100">
                     <tr className="hover:bg-gray-50 transition-colors">
                       <td className="py-5 px-6 font-semibold text-slate-900">Đặt cọc</td>
-                      <td className="py-5 px-6 font-bold text-[#D4AF37] text-lg">200 Triệu</td>
+                      <td className="py-5 px-6 font-bold text-[#D4AF37] text-lg">100 Triệu</td>
                       <td className="py-5 px-6 text-gray-600">Ngay khi ký Thỏa thuận đặt cọc</td>
                       <td className="py-5 px-6 text-gray-600">Xác nhận quyền mua</td>
                     </tr>
@@ -1699,7 +1663,7 @@ export default function App() {
                   <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4">
                     <div className="flex justify-between items-center mb-2">
                       <h4 className="font-bold text-slate-900 text-lg">Đặt cọc</h4>
-                      <span className="font-bold text-[#D4AF37] text-lg">200 Triệu</span>
+                      <span className="font-bold text-[#D4AF37] text-lg">100 Triệu</span>
                     </div>
                     <p className="text-sm text-gray-600 mb-2"><span className="font-medium text-slate-800">Thời gian:</span> Ngay khi ký Thỏa thuận đặt cọc</p>
                     <div className="bg-gray-50 p-2 rounded text-sm text-gray-600 italic border-l-2 border-gray-300">
@@ -1827,10 +1791,10 @@ export default function App() {
                 🔥 ĐẶC QUYỀN: Chiết khấu thêm 2% cho 25 suất Early Birds.
               </div>
               
-              <form className="mt-8" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công!'); }}>
+              <form className="mt-8" onSubmit={(e) => handleFormSubmit(e, "Form Giữ Chỗ")}>
                 <div className="flex flex-col md:flex-row gap-4">
-                  <input type="text" placeholder="Họ tên (*)" className="px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" required />
-                  <input type="tel" placeholder="Số điện thoại (*)" className="px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" required />
+                  <input type="text" name="name" placeholder="Họ tên (*)" className="px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" required />
+                  <input type="tel" name="phone" placeholder="Số điện thoại (*)" className="px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" required />
                   <button type="submit" className="w-full md:w-1/3 bg-red-600 hover:bg-red-700 text-white text-center py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-red-500/30">
                     ĐĂNG KÝ GIỮ CHỖ NGAY
                   </button>
@@ -1972,10 +1936,10 @@ export default function App() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase">GIÁ CHO THUÊ CĂN HỘ ĐÀ NẴNG</h2>
             <p className="text-white/80 text-sm mb-8">Quý khách vui lòng điền thông tin dưới đây. Hệ thống sẽ gửi vào Email/Zalo trong ít phút</p>
 
-            <form className="flex flex-col md:flex-row gap-4 justify-center mb-6" onSubmit={(e) => { e.preventDefault(); alert('Đăng ký thành công!'); }}>
-              <input type="text" placeholder="Họ tên (*)" className="px-4 py-3 rounded bg-white text-gray-900 w-full md:w-1/4 focus:outline-none" required />
-              <input type="email" placeholder="Email" className="px-4 py-3 rounded bg-white text-gray-900 w-full md:w-1/4 focus:outline-none" />
-              <input type="tel" placeholder="Số điện thoại (*)" className="px-4 py-3 rounded bg-white text-gray-900 w-full md:w-1/4 focus:outline-none" required />
+            <form className="flex flex-col md:flex-row gap-4 justify-center mb-6" onSubmit={(e) => handleFormSubmit(e, "Form Tải Bảng Giá")}>
+              <input type="text" name="name" placeholder="Họ tên (*)" className="px-4 py-3 rounded bg-white text-gray-900 w-full md:w-1/4 focus:outline-none" required />
+              <input type="email" name="email" placeholder="Email" className="px-4 py-3 rounded bg-white text-gray-900 w-full md:w-1/4 focus:outline-none" />
+              <input type="tel" name="phone" placeholder="Số điện thoại (*)" className="px-4 py-3 rounded bg-white text-gray-900 w-full md:w-1/4 focus:outline-none" required />
               <button type="submit" className="px-8 py-3 rounded bg-[#E6A122] hover:bg-[#c98c1d] text-white font-bold w-full md:w-1/4 transition-colors">
                 TẢI XUỐNG
               </button>
@@ -2237,7 +2201,7 @@ export default function App() {
                   href="tel:0905683225"
                   className="bg-[#0B1426] hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2"
                 >
-                  Gọi Hotline: 0905.683.225
+                  Gọi Hotline: 0905 683 225
                 </a>
               </div>
             </div>
@@ -2260,53 +2224,9 @@ export default function App() {
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-12 items-start">
-            {/* Left: Video Review */}
-            <div className="w-full lg:w-1/2">
-              <div className="bg-slate-900 rounded-2xl p-2 shadow-2xl">
-                <div className="relative w-full overflow-hidden rounded-xl" style={{ paddingTop: '56.25%' }}>
-                  <iframe 
-                    className="absolute top-0 left-0 w-full h-full"
-                    src="https://www.youtube.com/embed/KhWGSx-DXk4" 
-                    title="Capital Square Review" 
-                    frameBorder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerPolicy="strict-origin-when-cross-origin" 
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              </div>
-              <div className="mt-6 text-center lg:text-left">
-                <h3 className="text-2xl font-bold font-serif text-slate-900 mb-2">Video Review Thực Tế Dự Án</h3>
-                <p className="text-gray-600 mb-6">Khám phá không gian sống đẳng cấp và tầm nhìn panorama tuyệt mỹ từ Capital Square.</p>
-                
-                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm">
-                  <ul className="space-y-3 mb-6 text-left">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
-                      <span className="text-gray-700 font-medium">Miễn phí đón sân bay</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
-                      <span className="text-gray-700 font-medium">Hỗ trợ chi phí phát sinh</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
-                      <span className="text-gray-700 font-medium">Tư vấn nhiệt tình, linh hoạt thời gian</span>
-                    </li>
-                  </ul>
-                  <button 
-                    onClick={() => openModal({ title: 'Đăng Ký Tham Quan Miễn Phí', subtitle: 'Hỗ trợ xe đưa đón tận nơi & Tư vấn trực tiếp tại dự án', buttonText: 'ĐĂNG KÝ NGAY' })}
-                    className="w-full bg-[#D4AF37] hover:bg-[#b5952f] text-slate-900 font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-[#D4AF37]/30 flex items-center justify-center gap-2"
-                  >
-                    Đăng Ký Tham Quan Dự Án Miễn Phí
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: FAQ Accordion */}
-            <div className="w-full lg:w-1/2">
+          <div className="flex flex-col gap-12 items-center">
+            {/* FAQ Accordion */}
+            <div className="w-full max-w-4xl mx-auto">
               <div className="space-y-4">
                 {faqData.map((faq, index) => (
                   <div 
@@ -2352,14 +2272,14 @@ export default function App() {
               />
               <div className="text-sm space-y-3">
                 <p className="font-bold text-[#D4AF37]">Đại lý phân phối chính thức</p>
-                <p>Công ty Cổ phần Bất động sản Capital Square</p>
+                <p>CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG</p>
                 <p className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#D4AF37]" />
                   <span>386 Điện Biên Phủ, Phường Thanh Khê, Thành Phố Đà Nẵng</span>
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 shrink-0 text-[#D4AF37]" />
-                  <a href="tel:0905683225" className="hover:text-[#D4AF37] transition-colors font-bold">0905.683.225</a>
+                  <a href="tel:0905683225" className="hover:text-[#D4AF37] transition-colors font-bold">0905 683 225</a>
                 </p>
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4 shrink-0 text-[#D4AF37]" />
@@ -2497,10 +2417,10 @@ export default function App() {
               <p className="text-gray-300 mt-2 text-sm">{modalConfig.subtitle}</p>
             </div>
             
-            <form className="p-6 space-y-4" onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); alert('Đăng ký thành công! Chúng tôi sẽ liên hệ sớm nhất.'); }}>
+            <form className="p-6 space-y-4" onSubmit={(e) => handleFormSubmit(e, "Form Modal")}>
               <div>
                 <input 
-                  type="text" 
+                  type="text" name="name" 
                   placeholder="Họ và tên *" 
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   required
@@ -2508,7 +2428,7 @@ export default function App() {
               </div>
               <div>
                 <input 
-                  type="tel" 
+                  type="tel" name="phone" 
                   placeholder="Số điện thoại *" 
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   required
@@ -2516,7 +2436,7 @@ export default function App() {
               </div>
               <div>
                 <input 
-                  type="email" 
+                  type="email" name="email" 
                   placeholder="Email" 
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
@@ -2551,10 +2471,10 @@ export default function App() {
               <p className="text-gray-300 mt-2 text-sm">Giấy phép xây dựng, Quyết định 1/500, Sổ hồng quỹ đất...</p>
             </div>
             
-            <form className="p-6 space-y-4" onSubmit={(e) => { e.preventDefault(); setIsLegalModalOpen(false); alert('Đăng ký thành công! Hệ thống sẽ gửi hồ sơ qua Zalo/Email cho bạn.'); }}>
+            <form className="p-6 space-y-4" onSubmit={(e) => handleFormSubmit(e, "Form Pháp Lý")}>
               <div>
                 <input 
-                  type="text" 
+                  type="text" name="name" 
                   placeholder="Họ và tên *" 
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   required
@@ -2562,7 +2482,7 @@ export default function App() {
               </div>
               <div>
                 <input 
-                  type="tel" 
+                  type="tel" name="phone" 
                   placeholder="Số điện thoại (Zalo) *" 
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   required
@@ -2570,7 +2490,7 @@ export default function App() {
               </div>
               <div>
                 <input 
-                  type="email" 
+                  type="email" name="email" 
                   placeholder="Email nhận tài liệu" 
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
@@ -2652,15 +2572,11 @@ export default function App() {
                 
                 <form 
                   className="space-y-4" 
-                  onSubmit={(e) => { 
-                    e.preventDefault(); 
-                    setShowExitIntent(false); 
-                    alert('Đăng ký thành công! Chuyên viên sẽ liên hệ với bạn trong ít phút.'); 
-                  }}
+                  onSubmit={(e) => handleFormSubmit(e, "Form Popup Thoát Trang")}
                 >
                   <div>
                     <input 
-                      type="text" 
+                      type="text" name="name" 
                       placeholder="Họ và tên của bạn *" 
                       className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50"
                       required
@@ -2668,7 +2584,7 @@ export default function App() {
                   </div>
                   <div>
                     <input 
-                      type="tel" 
+                      type="tel" name="phone" 
                       placeholder="Số điện thoại (Zalo) *" 
                       className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50"
                       required
