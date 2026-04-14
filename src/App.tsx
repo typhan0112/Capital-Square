@@ -59,7 +59,7 @@ const comparisonData = [
       density: '40% mật độ xây dựng',
       amenities: '88+ tiện ích, Hồ bơi 1.500m2',
       operator: 'Savills Việt Nam',
-      price: 'Từ 4.x tỷ/căn',
+      price: 'Từ 3.x tỷ/căn',
       progress: 'Bàn giao Q1/2027',
       highlight: 'Bán & cho thuê người nước ngoài'
     }
@@ -555,7 +555,7 @@ export default function App() {
           {/* 3 Highlight Boxes */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
             <div className="bg-[#E67E22] rounded-full py-4 px-6 text-center shadow-lg border border-[#F39C12]/50 transform hover:scale-105 transition-transform">
-              <p className="text-white font-bold text-lg leading-tight uppercase">GIÁ BÁN CHỈ TỪ 4,2 TỶ</p>
+              <p className="text-white font-bold text-lg leading-tight uppercase">GIÁ BÁN CHỈ 3,X TỶ</p>
               <p className="text-white/90 text-sm font-medium uppercase">SỞ HỮU LÂU DÀI</p>
             </div>
             <div className="bg-[#E67E22] rounded-full py-4 px-6 text-center shadow-lg border border-[#F39C12]/50 transform hover:scale-105 transition-transform">
@@ -621,6 +621,10 @@ export default function App() {
                 <div className="flex flex-wrap gap-4">
                   <label className="flex items-center gap-2 text-white cursor-pointer bg-white/10 px-3 py-2 rounded border border-white/20 hover:bg-white/20 transition-colors">
                     <input type="checkbox" className="w-4 h-4 accent-[#D4AF37]" />
+                    <span className="text-sm">1 phòng ngủ</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-white cursor-pointer bg-white/10 px-3 py-2 rounded border border-white/20 hover:bg-white/20 transition-colors">
+                    <input type="checkbox" className="w-4 h-4 accent-[#D4AF37]" />
                     <span className="text-sm">2 phòng ngủ</span>
                   </label>
                   <label className="flex items-center gap-2 text-white cursor-pointer bg-white/10 px-3 py-2 rounded border border-white/20 hover:bg-white/20 transition-colors">
@@ -642,7 +646,7 @@ export default function App() {
               </button>
               
               <p className="text-center text-gray-400 text-xs mt-4">
-                *Giám đốc dự án của dự án sẽ gửi Full bảng giá và phương án mua tốt nhất cho anh chị chỉ sau 2 Phút – 0793.551.551
+                *Giám đốc dự án của dự án sẽ gửi Full bảng giá và phương án mua tốt nhất cho anh chị chỉ sau 2 Phút – 0905.683.225
               </p>
             </form>
           </div>
@@ -2277,13 +2281,17 @@ export default function App() {
                   <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#D4AF37]" />
                   <span>386 Điện Biên Phủ, Phường Thanh Khê, Thành Phố Đà Nẵng</span>
                 </p>
+                <p className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#D4AF37]" />
+                  <span>Văn phòng: 346 Đường 2/9, Hòa Cường, Hải Châu, Đà Nẵng</span>
+                </p>
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 shrink-0 text-[#D4AF37]" />
                   <a href="tel:0905683225" className="hover:text-[#D4AF37] transition-colors font-bold">0905 683 225</a>
                 </p>
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4 shrink-0 text-[#D4AF37]" />
-                  <a href="mailto:info@datxanhmientrung.com" className="hover:text-[#D4AF37] transition-colors">info@datxanhmientrung.com</a>
+                  <a href="mailto:qlkd.datxanhmientrung@gmail.com" className="hover:text-[#D4AF37] transition-colors">qlkd.datxanhmientrung@gmail.com</a>
                 </p>
               </div>
             </div>
