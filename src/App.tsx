@@ -2276,14 +2276,11 @@ export default function App() {
               />
               <div className="text-sm space-y-3">
                 <p className="font-bold text-[#D4AF37]">Đại lý phân phối chính thức</p>
-                <p>CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG</p>
+                <p>CÔNG TY CỔ PHẦN BẤT ĐỘNG SẢN NAM MIỀN TRUNG</p>
+                <p>(Công ty con thuộc Đất Xanh Miền Trung)</p>
                 <p className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#D4AF37]" />
-                  <span>386 Điện Biên Phủ, Phường Thanh Khê, Thành Phố Đà Nẵng</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#D4AF37]" />
-                  <span>Văn phòng: 346 Đường 2/9, Hòa Cường, Hải Châu, Đà Nẵng</span>
+                  <span>số 346 đường 2/9, Hòa Cường, Đà Nẵng</span>
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 shrink-0 text-[#D4AF37]" />
